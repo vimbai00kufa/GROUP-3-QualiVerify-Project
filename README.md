@@ -1,5 +1,5 @@
 # GROUP-3-QualiVerify-Project
-
+Software Engineering Practical Based Assignment
 ## Project Overview
 
 This repository contains the implementation of the MIM736 Practical
