@@ -1,38 +1,26 @@
-"""Application factory for the Qualification Verification System (QVS)."""
-
-from pathlib import Path
+"""QVS - App factory (skeleton, no logic)."""
 
 from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
 
-from .config import Settings, get_settings
-from .database import Base, make_engine
-from .routes import router
-
-STATIC_DIR = Path(__file__).resolve().parent / "static"
+from app.routes import router
 
 
-def create_app(settings: Settings | None = None) -> FastAPI:
-    """Create and configure the FastAPI application."""
-    settings = settings or get_settings()
-    engine = make_engine(settings.database_url)
-    Base.metadata.create_all(bind=engine)
-
+def create_app() -> FastAPI:
+    """Create and return the FastAPI app."""
     app = FastAPI(
-        title=settings.app_name,
-        version=settings.app_version,
-        description="DevOps-enabled qualification verification system (MIM736).",
+        title="Qualification Verification System (QVS)",
+        description="MIM736 Practical Assignment - skeleton only",
+        version="0.1.0",
     )
-    app.state.settings = settings
-    app.state.engine = engine
-    app.include_router(router, prefix="/api/v1")
 
-    @app.get("/health", tags=["health"])
-    def health() -> dict[str, str]:
-        """Liveness probe used by Docker and monitoring."""
-        return {"status": "ok"}
+    app.include_router(router)
 
-    # Web UI (mounted last so the API routes and /docs take priority).
-    app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
+    @app.get("/", tags=["root"])
+    def root():
+        return {"message": "QVS API - skeleton running"}
+
+    @app.get("/health", tags=["root"])
+    def health():
+        return {"message": "OK - skeleton health check"}
 
     return app

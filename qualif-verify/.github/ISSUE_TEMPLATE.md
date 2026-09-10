@@ -1,10 +1,7 @@
-## Task
-<!-- One sentence -->
+# Issue (skeleton)
 
-## Acceptance criteria
-- [ ] ...
+Simple text placeholder.
 
-## Definition of done
-- [ ] Code on a feature branch with meaningful commits
-- [ ] Tests pass in CI
-- [ ] PR reviewed & merged
+- Title:
+- Owner:
+- Task:

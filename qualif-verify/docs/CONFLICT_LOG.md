@@ -1,8 +1,7 @@
-# Merge Conflict Log (evidence)
+# Conflict Log (skeleton)
 
-Fill this in during the conflict drill (docs/BRANCHING.md), with screenshots
-attached or linked to the PR.
+Simple text placeholder - no conflicts yet.
 
-| Date | Branches involved | Files | What conflicted | How it was resolved | Reviewed by |
-|---|---|---|---|---|---|
-| (after the drill) | | | | | |
+| Date | Branch | Conflict | Resolution |
+|------|--------|----------|------------|
+| - | - | - | - |
