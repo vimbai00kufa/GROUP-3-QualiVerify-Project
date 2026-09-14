@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Qualification Verification System</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">QV</div>
+      <div>
+        <h1>Qualification Verification System</h1>
+        <p class="tagline">MIM736 · DevOps-enabled verification service</p>
+      </div>
+    </div>
+    <div class="identity">
+      <label>Role
+        <select id="role">
+          <option value="admin" selected>admin</option>
+          <option value="verifier">verifier</option>
+          <option value="">guest (verify only)</option>
+        </select>
+      </label>
+      <label>User
+        <input id="user" value="demo@univ.zw" />
+      </label>
+      <a class="docs-link" href="/docs" target="_blank" rel="noreferrer">API docs ↗</a>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-tab="verify">Verify</button>
+    <button class="tab" data-tab="search">Search</button>
+    <button class="tab" data-tab="register">Register</button>
+    <button class="tab" data-tab="audit">Audit Log</button>
+  </nav>
+
+  <main>
+    <!-- VERIFY -->
+    <section class="tab-panel active" id="panel-verify">
+      <div class="card">
+        <h2>Verify a qualification</h2>
+        <p class="hint">Public endpoint — anyone can check whether a certificate is real. No login needed.</p>
+        <form id="verify-form" class="stack">
+          <label class="field">Certificate number
+            <input id="v-cert" placeholder="ZW-ENG-2025-0001" autocomplete="off" required />
+          </label>
+          <label class="field">Holder full name
+            <input id="v-name" placeholder="Tendai Moyo" autocomplete="off" required />
+          </label>
+          <div class="row">
+            <button type="submit" class="btn primary">Verify authenticity</button>
+            <button type="button" class="btn ghost" id="seed-demo">Load demo data</button>
+          </div>
+          <div id="verify-banner" class="banner"></div>
+        </form>
+        <div id="verify-result"></div>
+      </div>
+    </section>
+
+    <!-- SEARCH -->
+    <section class="tab-panel" id="panel-search">
+      <div class="card">
+        <h2>Search records</h2>
+        <p class="hint">Requires the <b>verifier</b> or <b>admin</b> role. Matches holder name or certificate number.</p>
+        <form id="search-form" class="row">
+          <input id="s-q" placeholder="e.g. Moyo or ZW-ENG" style="flex:1; min-width:220px" autocomplete="off" />
+          <button type="submit" class="btn primary">Search</button>
+        </form>
+        <div id="search-banner" class="banner"></div>
+        <div id="search-results"></div>
+      </div>
+    </section>
+
+    <!-- REGISTER -->
+    <section class="tab-panel" id="panel-register">
+      <div class="card">
+        <h2>Register a qualification</h2>
+        <p class="hint">Requires the <b>admin</b> role. The record is signed (HMAC-SHA256) and an audit entry is written.</p>
+        <form id="register-form" class="stack">
+          <label class="field">Certificate number
+            <input id="r-cert" placeholder="ZW-ENG-2026-0042" autocomplete="off" required />
+          </label>
+          <label class="field">Holder full name
+            <input id="r-name" placeholder="e.g. Rudo Chikafu" autocomplete="off" required />
+          </label>
+          <label class="field">Qualification name
+            <input id="r-qual" placeholder="e.g. BCom Accounting" autocomplete="off" required />
+          </label>
+          <label class="field">Issuing institution
+            <input id="r-inst" placeholder="e.g. University of Zimbabwe" autocomplete="off" required />
+          </label>
+          <label class="field">Date issued
+            <input id="r-date" type="date" required />
+          </label>
+          <div class="row"><button type="submit" class="btn primary">Register qualification</button></div>
+          <div id="register-banner" class="banner"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- AUDIT -->
+    <section class="tab-panel" id="panel-audit">
+      <div class="card">
+        <div class="row" style="justify-content:space-between; align-items:center; margin-bottom:6px">
+          <h2 style="margin:0">Audit log</h2>
+          <button id="audit-refresh" class="btn ghost">Refresh</button>
+        </div>
+        <p class="hint">Append-only history of every registration, search, verification and revocation. <b>Admin</b> only.</p>
+        <div id="audit-banner" class="banner"></div>
+        <div id="audit-results"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Qualification Verification System · MIM736 Practical Assignment ·
+    FastAPI + SQLAlchemy + pytest + ruff + Docker + GitHub Actions
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
